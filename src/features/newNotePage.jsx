@@ -3,7 +3,6 @@ import { createNote } from "../controller/fetch_backend.js";
 import Sidebar from '../components/Sidebar';
 
 function NotePage() {
-  let [historyRows, setHistoryRows] = useState([]);
   let [title, setTitle] = useState('');
   let [content, setContent] = useState('');
 

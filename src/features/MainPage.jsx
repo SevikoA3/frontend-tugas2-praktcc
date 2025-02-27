@@ -1,7 +1,6 @@
 import Sidebar from '../components/Sidebar';
 
 function NotePage() {
-
   return (
     <>
       <div className="flex w-full h-screen">
