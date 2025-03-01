@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-
 export default function History({id, title, currentID}) {
     const navigate = useNavigate();
     
     const changeURL = (id) => {
-        navigate(`/${id}`);
+        navigate(`/frontend-tugas2-praktcc/${id}`);
     }
 
     return (

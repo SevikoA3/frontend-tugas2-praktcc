@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { createNote } from "../controller/fetch_backend.js";
 import Sidebar from '../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 function NotePage() {
   let [title, setTitle] = useState('');
   let [content, setContent] = useState('');
+  const navigate = useNavigate();
 
   const createNoteOnPage = async () => {
     const data = {
@@ -13,7 +15,7 @@ function NotePage() {
     }
 
     await createNote(data);
-    window.location.href = '/';
+    navigate('/frontend-tugas2-praktcc/');
   }
 
   return (

@@ -10,9 +10,9 @@ export default function App() {
         <Router>
             <div>
                 <Routes>
-                    <Route path="/:id" element={<NotePage />} />
-                    <Route path="/" element={<MainPage />} />
-                    <Route path="/newNote" element={<NewNotePage />} />
+                    <Route path="frontend-tugas2-praktcc/" element={<MainPage />} />
+                    <Route path="frontend-tugas2-praktcc/:id" element={<NotePage />} />
+                    <Route path="frontend-tugas2-praktcc/new-note" element={<NewNotePage />} />
                 </Routes>
             </div>
         </Router>

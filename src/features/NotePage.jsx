@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { deleteNote, getNotes, updateNote } from "../controller/fetch_backend.js";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Markdown from 'markdown-to-jsx';
 import Sidebar from '../components/Sidebar';
 
@@ -9,6 +9,7 @@ function NotePage() {
   let [title, setTitle] = useState('');
   let [content, setContent] = useState('');
   let [editMode, setEditMode] = useState(false);
+  const navigate = useNavigate();
 
   const updateNoteOnPage = async () => {
     const data = {
@@ -23,7 +24,7 @@ function NotePage() {
 
   const deleteNoteOnPage = async () => {
     await deleteNote(id);
-    window.location.href = '/';
+    navigate('/frontend-tugas2-praktcc/');
   }
 
   useEffect(() => {

@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getNotes } from "../controller/fetch_backend";
 import History from "./History";
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar({ currentID }) {
     const [historyRows, setHistoryRows] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -11,7 +13,6 @@ function Sidebar({ currentID }) {
             const rows = data.notes.map((note, index) => (
                 <History currentID={currentID} id={note.id} title={note.title} content={note.content} />
             ));
-
             setHistoryRows(rows);
         }
         fetchData();
@@ -24,7 +25,7 @@ function Sidebar({ currentID }) {
             <div className="bg-[var(--color-secondary)] min-w-64 flex flex-col h-full">
                 <div className="cotainer mt-10 mx-5">
                     <h1 className='text-[var(--color-text)] text-3xl'>SeviNotes</h1>
-                    <button className='bg-[var(--color-accent)] rounded-xl p-2 mt-8 flex flex-row' onClick={() => window.location.href = '/newNote'}>
+                    <button className='bg-[var(--color-accent)] rounded-xl p-2 mt-8 flex flex-row' onClick={() => navigate('/frontend-tugas2-praktcc/new-note')}>
                         <h1 className='text-[var(--color-secondary)] text-lg mr-3'>New Note </h1>
                         <span className="material-symbols-outlined">
                             note_stack
