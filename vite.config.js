@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/frontend-tugas2-praktcc/",
+  base: "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -17,7 +17,7 @@ export default defineConfig({
     strictPort: true,
   },
   server: {
-    port: 5173,
+    port: 8080,
     strictPort: true,
     host: "0.0.0.0",
     allowedHosts: [
