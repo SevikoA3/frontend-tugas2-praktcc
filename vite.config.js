@@ -22,7 +22,7 @@ export default defineConfig({
     host: true,
     allowedHosts: [
       "sevikofe-938071808488.asia-southeast2.run.app",
-      "https://sevikofe-vmg5pljvnq-et.a.run.app",
+      "sevikofe-vmg5pljvnq-et.a.run.app",
     ],
   },
 });
