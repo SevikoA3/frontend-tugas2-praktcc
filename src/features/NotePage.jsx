@@ -28,21 +28,38 @@ function NotePage() {
       title: title,
       content: content,
     };
-
-    document.getElementById(id).innerText = title;
-    const response = await axiosInstance.patch(`${BASE_URL}/note/${id}`, data, {
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
+    try {
+      document.getElementById(id).innerText = title;
+      const response = await axiosInstance.patch(
+        `${BASE_URL}/note/${id}`,
+        data,
+        {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      alert(
+        "Failed to update note: " +
+          (error?.response?.data?.message || error.message)
+      );
+    }
   };
 
   const deleteNoteOnPage = async () => {
-    const response = await axiosInstance.delete(`${BASE_URL}/note/${id}`, {
-      withCredentials: true,
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    navigate("/frontend-tugas2-praktcc/");
+    try {
+      await axiosInstance.delete(`${BASE_URL}/note/${id}`, {
+        withCredentials: true,
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      navigate("/");
+    } catch (error) {
+      alert(
+        "Failed to delete note: " +
+          (error?.response?.data?.message || error.message)
+      );
+    }
   };
 
   useEffect(() => {

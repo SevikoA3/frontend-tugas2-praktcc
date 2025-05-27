@@ -11,6 +11,7 @@ function NotePage() {
   let [expire, setExpire] = useState("");
   let [token, setToken] = useState("");
   let [userId, setUserId] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -42,12 +43,12 @@ function NotePage() {
         const decoded = jwtDecode(currentToken);
         decodedId = decoded.id;
       } catch (e) {
-        alert("Token invalid. Please login again.");
+        setError("Token invalid. Please login again.");
         return;
       }
     }
     if (!decodedId) {
-      alert("User ID not found. Please try again.");
+      setError("User ID not found. Please try again.");
       return;
     }
     const data = {
@@ -56,17 +57,13 @@ function NotePage() {
       userId: decodedId,
     };
     try {
-      const response = await axiosInstance.post(`${BASE_URL}/note`, data, {
+      await axiosInstance.post(`${BASE_URL}/note`, data, {
         withCredentials: true,
         headers: { Authorization: `Bearer ${currentToken}` },
       });
-      navigate("/frontend-tugas2-praktcc/");
+      navigate("/");
     } catch (error) {
-      console.error(
-        "Error creating note:",
-        error?.response?.data || error.message
-      );
-      alert(
+      setError(
         "Failed to create note: " +
           (error?.response?.data?.message || error.message)
       );
@@ -78,6 +75,7 @@ function NotePage() {
       <div className="flex w-full h-screen">
         <Sidebar />
         <div className="bg-[var(--color-primary)] w-full min-w-52 flex flex-col items-center h-full pt-10 pb-20 px-20">
+          {error && <div className="mb-4 text-red-400">{error}</div>}
           <input
             type="text"
             value={title}

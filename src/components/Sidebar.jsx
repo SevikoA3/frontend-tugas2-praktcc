@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -11,6 +11,8 @@ function Sidebar() {
   let [expire, setExpire] = useState("");
   let [token, setToken] = useState("");
   let [currentID, setCurrentID] = useState("");
+  const [error, setError] = useState("");
+  const [logoutError, setLogoutError] = useState("");
   const navigate = useNavigate();
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -24,35 +26,53 @@ function Sidebar() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Use axiosInstance instead of axios
-      const response = await axiosInstance.get(`${BASE_URL}/notes`, {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = response.data;
-      const rows = data.notes.map((note, index) => (
-        <History
-          currentID={currentID}
-          id={note.id}
-          title={note.title}
-          content={note.content}
-        />
-      ));
-      setHistoryRows(rows);
+      try {
+        const response = await axiosInstance.get(`${BASE_URL}/notes`, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = response.data;
+        const rows = data.notes.map((note, index) => (
+          <History
+            currentID={currentID}
+            id={note.id}
+            title={note.title}
+            content={note.content}
+            key={note.id}
+          />
+        ));
+        setHistoryRows(rows);
+        setError("");
+      } catch (err) {
+        if (err?.response?.data?.message) {
+          setError("Failed to load notes: " + err.response.data.message);
+        } else if (err?.message) {
+          setError("Failed to load notes: " + err.message);
+        } else {
+          setError("Failed to load notes. Please try again.");
+        }
+      }
     };
     fetchData();
   }, [currentID]);
 
   const handleLogout = async () => {
+    setLogoutError("");
     try {
       await axiosInstance.post(
         `${BASE_URL}/logout`,
         {},
         { withCredentials: true }
       );
-      navigate("/frontend-tugas2-praktcc/login");
+      navigate("/login");
     } catch (error) {
-      console.error("Logout failed:", error);
+      if (error?.response?.data?.message) {
+        setLogoutError("Logout failed: " + error.response.data.message);
+      } else if (error?.message) {
+        setLogoutError("Logout failed: " + error.message);
+      } else {
+        setLogoutError("Logout failed. Please try again.");
+      }
     }
   };
 
@@ -68,7 +88,7 @@ function Sidebar() {
           <h1 className="text-[var(--color-text)] text-3xl">SeviNotes</h1>
           <button
             className="bg-[var(--color-accent)] text-[var(--color-secondary)] rounded-xl p-2 mt-8 flex flex-row items-center"
-            onClick={() => navigate("/frontend-tugas2-praktcc/new-note")}
+            onClick={() => navigate("/new-note")}
           >
             <h1 className="text-lg mr-3">New Note </h1>
             <span className="material-symbols-outlined">note_stack</span>
@@ -78,6 +98,7 @@ function Sidebar() {
           id="history-container"
           className="cotainer mt-5 mx-5 flex flex-col gap-1 w-[80%] flex-grow"
         >
+          {error && <div className="mb-2 text-red-400 text-sm">{error}</div>}
           {historyRows}
         </div>
         <div className="mx-5 mb-10 mt-auto">
@@ -88,6 +109,9 @@ function Sidebar() {
             <h1 className="text-lg mr-3">Logout</h1>
             <span className="material-symbols-outlined">logout</span>
           </button>
+          {logoutError && (
+            <div className="mt-2 text-red-400 text-sm">{logoutError}</div>
+          )}
         </div>
       </div>
     </>
