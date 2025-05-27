@@ -6,19 +6,18 @@ import LoginPage from "./features/LoginPage.jsx";
 import RegisterPage from "./features/RegisterPage.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
 export default function App() {
-    return (
-        <Router>
-            <div>
-                <Routes>
-                    <Route path="frontend-tugas2-praktcc/login" element={<LoginPage />} />
-                    <Route path="frontend-tugas2-praktcc/register" element={<RegisterPage />} />
-                    <Route path="frontend-tugas2-praktcc/" element={<MainPage />} />
-                    <Route path="frontend-tugas2-praktcc/:id" element={<NotePage />} />
-                    <Route path="frontend-tugas2-praktcc/new-note" element={<NewNotePage />} />
-                </Routes>
-            </div>
-        </Router>
-    );
+  return (
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/:id" element={<NotePage />} />
+          <Route path="/new-note" element={<NewNotePage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }

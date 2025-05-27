@@ -19,11 +19,6 @@ export default defineConfig({
   server: {
     port: 8080,
     strictPort: true,
-    host: "0.0.0.0",
-    allowedHosts: [
-      "frontend-note-938071808488.us-central1.run.app",
-      ".localhost",
-      ".127.0.0.1",
-    ],
+    host: true,
   },
 });
