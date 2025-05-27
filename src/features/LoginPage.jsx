@@ -14,7 +14,7 @@ export default function LoginPage() {
         try {
             const success = await login(username, password);
             if (!success) throw new Error("Invalid credentials");
-            navigate("/frontend-tugas2-praktcc/");
+            navigate("/");
         } catch (err) {
             setError("Login failed: " + err.message);
         }
@@ -46,7 +46,7 @@ export default function LoginPage() {
                 </button>
                 <div className="mt-4 text-center">
                     <span className="text-[var(--color-text)]">Don't have an account? </span>
-                    <span className="text-[var(--color-accent)] cursor-pointer" onClick={() => navigate("/frontend-tugas2-praktcc/register")}>Register</span>
+                    <span className="text-[var(--color-accent)] cursor-pointer" onClick={() => navigate("/register")}>Register</span>
                 </div>
             </form>
         </div>

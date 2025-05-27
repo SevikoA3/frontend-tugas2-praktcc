@@ -17,7 +17,7 @@ export default function RegisterPage() {
             const success = await register(username, password);
             if (!success) throw new Error("Registration failed");
             setSuccess("Registration successful! Redirecting to login...");
-            setTimeout(() => navigate("/frontend-tugas2-praktcc/login"), 1200);
+            setTimeout(() => navigate("/login"), 1200);
         } catch (err) {
             setError("Register failed: " + err.message);
         }
@@ -50,7 +50,7 @@ export default function RegisterPage() {
                 </button>
                 <div className="mt-4 text-center">
                     <span className="text-[var(--color-text)]">Already have an account? </span>
-                    <span className="text-[var(--color-accent)] cursor-pointer" onClick={() => navigate("/frontend-tugas2-praktcc/login")}>Login</span>
+                    <span className="text-[var(--color-accent)] cursor-pointer" onClick={() => navigate("/login")}>Login</span>
                 </div>
             </form>
         </div>
