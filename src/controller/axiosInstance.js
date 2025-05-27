@@ -41,7 +41,8 @@ export function getAxiosInstance({
     (error) => {
       if (
         error.response &&
-        (error.response.status === 401 || error.response.status === 403)
+        error.response.status >= 400 &&
+        error.response.status < 500
       ) {
         setToken("");
         localStorage.removeItem("token");
