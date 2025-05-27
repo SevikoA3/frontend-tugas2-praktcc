@@ -64,15 +64,22 @@ function NotePage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axiosInstance.get(`${BASE_URL}/notes`, {
-        withCredentials: true,
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = response.data;
-      const note = data.notes.find((note) => note.id == id);
-      if (note) {
-        setTitle(note.title);
-        setContent(note.content);
+      try {
+        const response = await axiosInstance.get(`${BASE_URL}/notes`, {
+          withCredentials: true,
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = response.data;
+        const note = data.notes.find((note) => note.id == id);
+        if (note) {
+          setTitle(note.title);
+          setContent(note.content);
+        }
+      } catch (err) {
+        // Redirect to /login if error is any 4xx
+        if (err?.response?.status >= 400 && err?.response?.status < 500) {
+          navigate("/login");
+        }
       }
     };
     fetchData();

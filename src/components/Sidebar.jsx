@@ -44,7 +44,10 @@ function Sidebar() {
         setHistoryRows(rows);
         setError("");
       } catch (err) {
-        if (err?.response?.data?.message) {
+        // Redirect to /login if error is any 4xx
+        if (err?.response?.status >= 400 && err?.response?.status < 500) {
+          navigate("/login");
+        } else if (err?.response?.data?.message) {
           setError("Failed to load notes: " + err.response.data.message);
         } else if (err?.message) {
           setError("Failed to load notes: " + err.message);

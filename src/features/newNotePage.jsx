@@ -63,10 +63,15 @@ function NotePage() {
       });
       navigate("/");
     } catch (error) {
-      setError(
-        "Failed to create note: " +
-          (error?.response?.data?.message || error.message)
-      );
+      // Redirect to /login if error is any 4xx
+      if (error?.response?.status >= 400 && error?.response?.status < 500) {
+        navigate("/login");
+      } else {
+        setError(
+          "Failed to create note: " +
+            (error?.response?.data?.message || error.message)
+        );
+      }
     }
   };
 
